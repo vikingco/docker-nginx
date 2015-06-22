@@ -1,7 +1,7 @@
 ###########################################################
 # VikingCo: Nginx Server
 ###########################################################
-FROM nginx:1.9.1
+FROM nginx:1.9.2
 MAINTAINER Dirk Moors
 
 ENV CONFDIR /tmp/conf
@@ -16,13 +16,16 @@ ENV SERVER_NAME localhost
 
 ENV MEDIADIR ${ROOT}/media
 ENV STATICDIR ${ROOT}/static
-ENV LOGDIR ${ROOT}/logs
 ENV SCRIPTSDIR ${ROOT}/scripts
+
+ENV LOGDIR /var/log
+ENV NGINX_LOGDIR ${LOGDIR}/nginx/
 
 # install and configure packages
 RUN set -x \
 	&& buildDeps=' \
 		python-pip \
+		build-essential \
 	' \
 	&& requiredAptPackages=' \
         python \
@@ -40,14 +43,9 @@ RUN set -x \
 		-exec rm -rf '{}' + \
 	&& apt-get purge -y --auto-remove $buildDeps
 
-# make directories
-#RUN mkdir -p ${MEDIADIR} && \
-#    mkdir -p ${STATICDIR} && \
-#    mkdir -p ${LOGDIR} && \
-#    mkdir -p ${SCRIPTSDIR}
-
-# set correct permissions
-#RUN chown -R www-data ${ROOT}
+# make log directory
+RUN mkdir -p ${NGINX_LOGDIR} \
+    && chown -R www-data ${NGINX_LOGDIR}
 
 # add default files
 ADD ${CONFSRC} ${CONFDIR}
