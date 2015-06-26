@@ -6,7 +6,7 @@ MAINTAINER Dirk Moors
 
 ENV CONFDIR /tmp/conf
 
-ENV ROOT /srv/www
+ENV ROOT /data
 
 ENV CONFSRC ./conf
 ENV SCRIPTSSRC ./scripts
@@ -51,5 +51,8 @@ RUN mkdir -p ${NGINX_LOGDIR} \
 ADD ${CONFSRC} ${CONFDIR}
 ADD ${SCRIPTSSRC} ${SCRIPTSDIR}
 
+# make symlink for run script
+RUN ln -s ${SCRIPTSDIR}/run.sh /usr/local/bin/run
+
 # set run command
-CMD ${SCRIPTSDIR}/run.sh
+CMD run
