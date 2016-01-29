@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-readonly NGINX_CONF_TEMPLATE="${CONFDIR}/nginx.template.conf"
+readonly NGINX_CONF_TEMPLATE="${CONF_DIR}/nginx.template.conf"
 readonly NGINX_CONF="/etc/nginx/conf.d/default.conf"
 
 readonly PYTHON_JINJA2="import os;

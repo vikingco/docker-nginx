@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-source "${SCRIPTSDIR}/config.sh"
+source "${SCRIPTS_DIR}/config.sh"
 
 make_config() {
     echo "Generating nginx config file..."
