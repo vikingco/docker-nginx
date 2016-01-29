@@ -1,25 +1,22 @@
 ###########################################################
 # VikingCo: Nginx Server
 ###########################################################
-FROM nginx:1.9.2
+FROM nginx:1.9.10
 MAINTAINER Dirk Moors
 
-ENV CONFDIR /tmp/conf
-
+# Set env variables
 ENV ROOT /data
+ENV CONF_DIR=/tmp/conf \
+	CONF_SRC=./conf \
+	SCRIPTS_SRC=./scripts \
+	SCRIPTS_DIR=${ROOT}/scripts \
+	MEDIA_DIR=${ROOT}/media \
+    STATIC_DIR=${ROOT}/static \
+	NGINX_LOG_DIR=/var/log/nginx/
 
-ENV CONFSRC ./conf
-ENV SCRIPTSSRC ./scripts
-
-ENV PORT 80
-ENV SERVER_NAME localhost
-
-ENV MEDIADIR ${ROOT}/media
-ENV STATICDIR ${ROOT}/static
-ENV SCRIPTSDIR ${ROOT}/scripts
-
-ENV LOGDIR /var/log
-ENV NGINX_LOGDIR ${LOGDIR}/nginx/
+# Build args
+ARG PORT=80
+ARG SERVER_NAME=localhost
 
 # install and configure packages
 RUN set -x \
@@ -44,15 +41,15 @@ RUN set -x \
 	&& apt-get purge -y --auto-remove $buildDeps
 
 # make log directory
-RUN mkdir -p ${NGINX_LOGDIR} \
-    && chown -R www-data ${NGINX_LOGDIR}
+RUN mkdir -p ${NGINX_LOG_DIR} \
+    && chown -R www-data ${NGINX_LOG_DIR}
 
 # add default files
-ADD ${CONFSRC} ${CONFDIR}
-ADD ${SCRIPTSSRC} ${SCRIPTSDIR}
+ADD ${CONF_SRC} ${CONF_DIR}
+ADD ${SCRIPTS_SRC} ${SCRIPTS_DIR}
 
 # make symlink for run script
-RUN ln -s ${SCRIPTSDIR}/run.sh /usr/local/bin/run
+RUN ln -s ${SCRIPTS_DIR}/run.sh /usr/local/bin/run
 
 # set run command
 CMD run
