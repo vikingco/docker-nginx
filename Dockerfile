@@ -12,11 +12,15 @@ ENV CONF_DIR=/tmp/conf \
 	SCRIPTS_DIR=${ROOT}/scripts \
 	MEDIA_DIR=${ROOT}/media \
     STATIC_DIR=${ROOT}/static \
-	NGINX_LOG_DIR=/var/log/nginx/
+	NGINX_LOG_DIR=/var/log/nginx
 
 # Build args
 ARG PORT=80
 ARG SERVER_NAME=localhost
+
+# Save build args as environment variables
+ENV PORT=${PORT} \
+    SERVER_NAME=${SERVER_NAME}
 
 # install and configure packages
 RUN set -x \
