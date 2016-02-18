@@ -9,3 +9,8 @@ Docker Nginx
     :target: https://quay.io/repository/vikingco/docker-nginx
     
 Web frontend for uWSGI
+
+Expects environment variables:
+
+    UWSGI_HOST
+    UWSGI_PORT
