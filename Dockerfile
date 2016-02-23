@@ -1,7 +1,7 @@
 ###########################################################
 # VikingCo: Nginx Server
 ###########################################################
-FROM nginx:1.9.10
+FROM nginx:1.9.11
 MAINTAINER Dirk Moors
 
 # Set env variables
@@ -12,11 +12,9 @@ ENV CONF_DIR=/tmp/conf \
 	SCRIPTS_DIR=${ROOT}/scripts \
 	MEDIA_DIR=${ROOT}/media \
     STATIC_DIR=${ROOT}/static \
-	NGINX_LOG_DIR=/var/log/nginx
-
-# Build args
-ARG PORT=80
-ARG SERVER_NAME=localhost
+	NGINX_LOG_DIR=/var/log/nginx \
+	PORT=80 \
+	SERVER_NAME=localhost
 
 # Save build args as environment variables
 ENV PORT=${PORT} \
